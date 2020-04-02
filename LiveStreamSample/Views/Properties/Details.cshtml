@@ -1,0 +1,74 @@
+﻿@model LiveStreamSample.Models.PropertyViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+<script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+<h1>Details</h1>
+
+<div>
+    <h4>Property</h4>
+    <hr />
+    <dl class="row">
+        <dd>
+            @Html.HiddenFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.UrlImage" height="100" width="100" />
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LiveUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.EditorFor(model => model.LiveUrl)
+            <button id="btnLiveStream">Update</button>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnLiveStream').click(function (e) {
+            e.preventDefault();
+            var data = {
+                id: $('#Id').val(),
+                liveStreamUrl: $('#LiveUrl').val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "https://localhost:44308/Properties/Edit",
+                content: "application/json; charset=utf-8",
+                dataType: "json",
+                data: data,
+                success: function (d) {
+                    alert('Ok');
+                },
+                error: function (xhr, textStatus, errorThrown) { }
+            });
+        });
+    })
+</script>
